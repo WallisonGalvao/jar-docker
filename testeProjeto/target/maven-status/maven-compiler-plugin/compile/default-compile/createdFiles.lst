@@ -37,7 +37,6 @@ com\sptech\testeprojeto\tela\login\Maquina.class
 com\sptech\testeprojeto\tela\login\Login$8.class
 com\sptech\testeprojeto\integracao\slack\IntegracaoSlack.class
 com\sptech\testeprojeto\tela\trayicon\IconeNoTray$3.class
-.netbeans_automatic_build
 com\sptech\testeprojeto\tela\cliques\TelaAtendimento$23.class
 com\sptech\testeprojeto\tela\login\SelectLogin.class
 com\sptech\testeprojeto\ValidacaoLogin.class
