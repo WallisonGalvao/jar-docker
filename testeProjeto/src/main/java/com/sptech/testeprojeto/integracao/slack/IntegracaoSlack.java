@@ -30,9 +30,9 @@ public class IntegracaoSlack {
         
         Connection config = new Connection();
         JdbcTemplate template = new JdbcTemplate(config.getDataSource());
-        String queryAlerta = "SELECT TOP(1) * FROM "
+        String queryAlerta = "SELECT * FROM "
                 + "log_alertas JOIN log_registros "
-                + "ON fk_registro = id_registro ORDER BY id_log_alerta DESC";
+                + "ON fk_registro = id_registro ORDER BY id_log_alerta DESC LIMIT 1";
         
 
         List<SlackTest> teste = template.query(queryAlerta, new BeanPropertyRowMapper<>(SlackTest.class));
