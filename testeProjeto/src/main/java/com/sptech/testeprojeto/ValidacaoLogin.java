@@ -63,15 +63,15 @@ public class ValidacaoLogin {
 
         Double percentualRAM = totalRAM.doubleValue() * (usoRAM / 100);
 
-        String queryOperacao = String.format("SELECT * FROM [dbo].[operacoes]"
-                + " WHERE (SELECT fk_operacao FROM [dbo].[maquinas] WHERE id_maquina = %d)"
+        String queryOperacao = String.format("SELECT * FROM operacoes"
+                + " WHERE (SELECT fk_operacao FROM maquinas WHERE id_maquina = %d)"
                 + "= id_operacao", identificarMaquina.getId());
         
         Operacao operacao = template.queryForObject(queryOperacao, new OperacaoMapper());
 
         // insert de log da CPU
         template.update(
-                "INSERT INTO [dbo].[log_registros](uso, disponivel, frequencia, fk_maquina, fk_componente, data_hora) VALUES (?, ?, ?, ?, ?, GETDATE())",
+                "INSERT INTO log_registros(uso, disponivel, frequencia, fk_maquina, fk_componente, data_hora) VALUES (?, ?, ?, ?, ?, GETDATE())",
                 usoCPU,
                 100 - usoCPU,
                 freqCPU,
@@ -82,7 +82,7 @@ public class ValidacaoLogin {
         cont = cont + 1;
         //// insert de log da RAM
         template.update(
-                "INSERT INTO [dbo].[log_registros](uso, disponivel, frequencia, fk_maquina, fk_componente, data_hora) VALUES (?, ?, ?, ?, ?, GETDATE())",
+                "INSERT INTO log_registros(uso, disponivel, frequencia, fk_maquina, fk_componente, data_hora) VALUES (?, ?, ?, ?, ?, GETDATE())",
                 usoRAM,
                 ramDisponivel,
                 0,
@@ -111,10 +111,10 @@ public class ValidacaoLogin {
                     operacao.getNome_gerente()
             );
 
-            String fkRegistro = "SELECT TOP (1) id_registro FROM [dbo].[log_registros] JOIN [dbo].[maquinas] ON id_maquina = fk_maquina JOIN [dbo].[componentes] ON id_componente = fk_componente JOIN [dbo].[operacoes] ON id_operacao = fk_operacao WHERE tipo = 'Processador' AND uso > 10.0 AND uso <= 20.0 ORDER BY id_registro DESC";
+            String fkRegistro = "SELECT TOP (1) id_registro FROM log_registros JOIN maquinas ON id_maquina = fk_maquina JOIN componentes ON id_componente = fk_componente JOIN operacoes ON id_operacao = fk_operacao WHERE tipo = 'Processador' AND uso > 10.0 AND uso <= 20.0 ORDER BY id_registro DESC";
             Registro idRegistro = template.queryForObject(fkRegistro, new RegistroMapper());
 
-            template.update("INSERT INTO [dbo].[log_alertas] (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
+            template.update("INSERT INTO log_alertas (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
                     codigoUrgencia,
                     descricao,
                     idRegistro.getId());
@@ -137,9 +137,9 @@ public class ValidacaoLogin {
                     operacao.getNome_gerente()
             );
 
-            String fkRegistro = "SELECT TOP (1) id_registro FROM [dbo].[log_registros] JOIN [dbo].[maquinas] ON id_maquina = fk_maquina JOIN [dbo].[componentes] ON id_componente = fk_componente JOIN [dbo].[operacoes] ON id_operacao = fk_operacao WHERE tipo = 'Processador' AND uso > 10.0 AND uso <= 20.0 ORDER BY id_registro DESC";
+            String fkRegistro = "SELECT TOP (1) id_registro FROM log_registros JOIN maquinas ON id_maquina = fk_maquina JOIN componentes ON id_componente = fk_componente JOIN operacoes ON id_operacao = fk_operacao WHERE tipo = 'Processador' AND uso > 10.0 AND uso <= 20.0 ORDER BY id_registro DESC";
             Registro idRegistro = template.queryForObject(fkRegistro, new RegistroMapper());
-            template.update("INSERT INTO [dbo].[log_alertas] (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
+            template.update("INSERT INTO log_alertas (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
                     codigoUrgencia,
                     descricao,
                     idRegistro.getId());
@@ -161,9 +161,9 @@ public class ValidacaoLogin {
                     operacao.getNome_gerente()
             );
 
-            String fkRegistro = "SELECT TOP (1) id_registro FROM [dbo].[log_registros] JOIN [dbo].[maquinas] ON id_maquina = fk_maquina JOIN [dbo].[componentes] ON id_componente = fk_componente JOIN [dbo].[operacoes] ON id_operacao = fk_operacao WHERE tipo = 'Processador' AND uso > 10.0 AND uso <= 20.0 ORDER BY id_registro DESC";
+            String fkRegistro = "SELECT TOP (1) id_registro FROM log_registros JOIN maquinas ON id_maquina = fk_maquina JOIN componentes ON id_componente = fk_componente JOIN operacoes ON id_operacao = fk_operacao WHERE tipo = 'Processador' AND uso > 10.0 AND uso <= 20.0 ORDER BY id_registro DESC";
             Registro idRegistro = template.queryForObject(fkRegistro, new RegistroMapper());
-            template.update("INSERT INTO [dbo].[log_alertas] (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
+            template.update("INSERT INTO log_alertas (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
                     codigoUrgencia,
                     descricao,
                     idRegistro.getId());
@@ -187,9 +187,9 @@ public class ValidacaoLogin {
             );
 
 
-            String fkRegistro = "SELECT TOP (1) id_registro FROM [dbo].[log_registros] JOIN [dbo].[maquinas] ON id_maquina = fk_maquina JOIN [dbo].[componentes] ON id_componente = fk_componente JOIN [dbo].[operacoes] ON id_operacao = fk_operacao WHERE tipo = 'Memoria Ram' AND uso > 85.0 ORDER BY id_registro DESC";
+            String fkRegistro = "SELECT TOP (1) id_registro FROM log_registros JOIN maquinas ON id_maquina = fk_maquina JOIN componentes ON id_componente = fk_componente JOIN operacoes ON id_operacao = fk_operacao WHERE tipo = 'Memoria Ram' AND uso > 85.0 ORDER BY id_registro DESC";
             Registro idRegistro = template.queryForObject(fkRegistro, new RegistroMapper());
-            template.update("INSERT INTO [dbo].[log_alertas] (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
+            template.update("INSERT INTO log_alertas (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
                     codigoUrgencia,
                     descricao,
                     idRegistro.getId());
@@ -211,9 +211,9 @@ public class ValidacaoLogin {
             );
 
 
-            String fkRegistro = "SELECT TOP (1) id_registro FROM [dbo].[log_registros] JOIN [dbo].[maquinas] ON id_maquina = fk_maquina JOIN [dbo].[componentes] ON id_componente = fk_componente JOIN [dbo].[operacoes] ON id_operacao = fk_operacao WHERE tipo = 'Memoria Ram' AND uso > 85.0 ORDER BY id_registro DESC";
+            String fkRegistro = "SELECT TOP (1) id_registro FROM log_registros JOIN maquinas ON id_maquina = fk_maquina JOIN componentes ON id_componente = fk_componente JOIN operacoes ON id_operacao = fk_operacao WHERE tipo = 'Memoria Ram' AND uso > 85.0 ORDER BY id_registro DESC";
             Registro idRegistro = template.queryForObject(fkRegistro, new RegistroMapper());
-            template.update("INSERT INTO [dbo].[log_alertas] (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
+            template.update("INSERT INTO log_alertas (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
                     codigoUrgencia,
                     descricao,
                     idRegistro.getId());
@@ -234,10 +234,9 @@ public class ValidacaoLogin {
                     operacao.getNome_gerente()
             );
 
-
-            String fkRegistro = "SELECT TOP (1) id_registro FROM [dbo].[log_registros] JOIN [dbo].[maquinas] ON id_maquina = fk_maquina JOIN [dbo].[componentes] ON id_componente = fk_componente JOIN [dbo].[operacoes] ON id_operacao = fk_operacao WHERE tipo = 'Memoria Ram' AND uso > 85.0 ORDER BY id_registro DESC";
+            String fkRegistro = "SELECT TOP (1) id_registro FROM log_registros JOIN maquinas ON id_maquina = fk_maquina JOIN componentes ON id_componente = fk_componente JOIN operacoes ON id_operacao = fk_operacao WHERE tipo = 'Memoria Ram' AND uso > 85.0 ORDER BY id_registro DESC";
             Registro idRegistro = template.queryForObject(fkRegistro, new RegistroMapper());
-            template.update("INSERT INTO [dbo].[log_alertas] (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
+            template.update("INSERT INTO log_alertas (codigo_urgencia, descricao, fk_registro) VALUES (?, ?, ?)",
                     codigoUrgencia,
                     descricao,
                     idRegistro.getId());
