@@ -11,7 +11,7 @@ public class Connection {
         
 
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://172.18.0.1:3306/smartsac");
+        dataSource.setUrl("jdbc:mysql://172.18.0.2:3306/smartsac");
         dataSource.setUsername("root");
         dataSource.setPassword("smartsac");
 
